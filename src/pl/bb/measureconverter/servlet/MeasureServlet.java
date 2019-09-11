@@ -1,4 +1,7 @@
-package pl.bb.javastart.servlet;
+package pl.bb.measureconverter.servlet;
+
+import pl.bb.measureconverter.service.MeasureConversionService;
+import pl.bb.measureconverter.service.WeightConversionService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +19,7 @@ public class MeasureServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html");
         PrintWriter writer = response.getWriter();
-        Calc calc = new Calc();
+        MeasureConversionService measureConversionService = new MeasureConversionService();
 
         String meters = request.getParameter("meters");
         String centimeters = request.getParameter("centimeters");
@@ -24,14 +27,14 @@ public class MeasureServlet extends HttpServlet {
 
 
         if (centimeters.equals("") && millimeters.equals("")) {
-            centimeters = calc.metersToCM(meters);
-            millimeters = calc.metersToMM(meters);
+            centimeters = measureConversionService.metersToCM(meters);
+            millimeters = measureConversionService.metersToMM(meters);
         } else if (centimeters.equals("") && meters.equals("")) {
-            centimeters = String.valueOf(calc.millimetersToCM(millimeters));
-            meters = String.valueOf(calc.millimetersToME(millimeters));
+            centimeters = String.valueOf(measureConversionService.millimetersToCM(millimeters));
+            meters = String.valueOf(measureConversionService.millimetersToME(millimeters));
         } else if (meters.equals("") && millimeters.equals("")) {
-            meters = String.valueOf(calc.centimetersToME(centimeters));
-            millimeters = String.valueOf(calc.centimetersToMM(centimeters));
+            meters = String.valueOf(measureConversionService.centimetersToME(centimeters));
+            millimeters = String.valueOf(measureConversionService.centimetersToMM(centimeters));
         } else {
             writer.println("Prosze podać tylko jedną wartość");
         }

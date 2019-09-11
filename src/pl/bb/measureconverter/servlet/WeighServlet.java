@@ -1,4 +1,7 @@
-package pl.bb.javastart.servlet;
+package pl.bb.measureconverter.servlet;
+
+import pl.bb.measureconverter.service.WeightConversionService;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +19,7 @@ public class WeighServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html");
         PrintWriter writer = response.getWriter();
-        Calc calc = new Calc();
+        WeightConversionService weightConversionService = new WeightConversionService();
 
 
         String kilograms = request.getParameter("kilograms");
@@ -25,14 +28,14 @@ public class WeighServlet extends HttpServlet {
 
 
         if (grams.equals("") && miligrams.equals("")) {
-            grams = String.valueOf(calc.kilogramsToGR(kilograms));
-            miligrams = String.valueOf(calc.kilogramsToMG(kilograms));
+            grams = String.valueOf(weightConversionService.kilogramsToGR(kilograms));
+            miligrams = String.valueOf(weightConversionService.kilogramsToMG(kilograms));
         } else if (kilograms.equals("") && miligrams.equals("")) {
-            kilograms = String.valueOf(calc.gramToKG(grams));
-            miligrams = String.valueOf(calc.gramToMG(grams));
+            kilograms = String.valueOf(weightConversionService.gramToKG(grams));
+            miligrams = String.valueOf(weightConversionService.gramToMG(grams));
         } else if (kilograms.equals("") && grams.equals("")) {
-            kilograms = String.valueOf(calc.miligramToKG(miligrams));
-            grams = String.valueOf(calc.miligramToGR(miligrams));
+            kilograms = String.valueOf(weightConversionService.miligramToKG(miligrams));
+            grams = String.valueOf(weightConversionService.miligramToGR(miligrams));
         } else {
             writer.println("Prosze podać tylko jedną wartość");
         }
